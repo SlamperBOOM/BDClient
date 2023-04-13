@@ -1,0 +1,18 @@
+Получить перечень и общее число задеpжанных pейсов полностью, по указанной пpичине, по указанному маpшpуту, и количество сданных билетов за вpемя задеpжки.
+
+select "FlightID" from "PostponesTable";
+
+select * from "PostponesTable"
+join "PostponeReasons" on ("PostponesTable"."PostponeReason" = "PostponeReasons"."ReasonID")
+where "Description" = 'Weather';
+
+select * from "PostponesTable"
+join "FlightsTable" on ("FlightsTable"."FlightID" = "PostponesTable"."FlightID")
+join (select * from "Cities")"Dep" on ("Dep"."CityID" = "Departure")
+join (select * from "Cities")"Arr" on ("Arr"."CityID" = "Arrival")
+and "Dep"."CityName" = 'Moscow' and "Arr"."CityName" = 'Vladivostok';
+
+select count("PassengerID") from "PostponesTable"
+join "FlightsTable" on ("FlightsTable"."FlightID" = "PostponesTable"."FlightID")
+join "Passengers" on ("Passengers"."FlightID" = "FlightsTable"."FlightID")
+where "RefundDate" >= "OldDate" and "RefundDate" <= "NewDate";
