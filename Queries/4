@@ -1,0 +1,15 @@
+Получить перечень и общее число самолетов приписанных к аэpопоpту, находящихся в нем в указанное вpемя, по вpемени поступления в аэpопоpт, по количеству совеpшенных
+pейсов.
+
+select * from "Planes";
+
+select distinct "Planes"."PlaneID" from "Planes"
+join "FlightsTable" on ("FlightsTable"."PlaneID" = "Planes"."PlaneID")
+join "Cities" on ("Departure" = "CityID" OR "Arrival" = "CityID")
+where ("CityName" = 'Moscow')
+and (("DepartureDate" > '05.25.2023 14:00' and "Departure" = "CityID")
+	 or ("ArrivalDate" < '05.25.2023 14:00' and "Arrival" = "CityID"));
+
+select "Planes"."PlaneID", count("FlightID") from "Planes"
+join "FlightsTable" on ("FlightsTable"."PlaneID" = "Planes"."PlaneID")
+group by "Planes"."PlaneID";
