@@ -1,0 +1,51 @@
+Получить список и общее число всех pаботников аэропорта, начальников отделов, работников указанного отдела, по стажу pаботы в аэpопоpту, половому пpизнаку, возpасту, пpизнаку наличия и количеству детей, по pазмеpу заpаботной платы.
+
+//При желании можно отсортировать записи по исследуемым параметрам
+//с помощью ORDER BY "*имя параметра*" ASC/DSC
+
+//Не получится объединить записи таблиц "Employees" и "Heads" для получения
+//ВСЕХ работников, т.к. структуры этих таблиц различаются
+
+//работники
+SELECT * FROM "Employees"
+WHERE date_part('year', age("Hired")) >= 10;
+//функция age() считает разницу между текущей датой и датой в аргументе
+
+SELECT * FROM "Employees"
+WHERE "Sex" = upper('f');
+
+SELECT * FROM "Employees"
+WHERE "Age" <= 37;
+
+SELECT * FROM "Employees"
+WHERE "Kids" > 0; 
+
+SELECT * FROM "Employees"
+WHERE "Salary" > 40000; 
+
+//начальники отделов
+SELECT * FROM "Heads"
+WHERE date_part('year', age("Hired")) <= 9;
+//далее по аналогии с предыдущими запросами
+
+//работники конкретного отдела
+SELECT 
+"Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids", "Departments"."DepartmentName"
+FROM "Employees" 
+join "Brigades" on("Employees"."BrigadeID" = "Brigades"."BrigadeID")
+join "Departments" on("Brigades"."DepID" = "Departments"."DepID")
+WHERE "Departments"."DepartmentName" = 'Security Staff'
+AND date_part('year', age("Employees"."Hired")) >= 10;
+//далее по аналогии
+
+//Подсчет количества
+SELECT COUNT("EmployeeID") FROM "Employees"
+WHERE "Salary" > 40000;
+//Можно по аналогии сделать со всеми предыдущими запросами. Возьмем самый сложный
+SELECT COUNT("EmployeeID") FROM "Employees" 
+join "Brigades" on("Employees"."BrigadeID" = "Brigades"."BrigadeID")
+join "Departments" on("Brigades"."DepID" = "Departments"."DepID")
+WHERE "Departments"."DepartmentName" = 'Security Staff'
+AND date_part('year', age("Employees"."Hired")) >= 10;
