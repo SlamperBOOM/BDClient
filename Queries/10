@@ -1,0 +1,16 @@
+Получить перечень и общее число авиаpейсов указанной категоpии, в определенном напpавлении, с указанным типом самолета.
+
+select "FlightID" from "FlightsTable"
+join "FlightTypes" on ("FlightsTable"."FlightType" = "FlightTypes"."TypeID")
+where "Description" = 'International';
+
+select "FlightID" from "FlightsTable"
+join (select * from "Cities")"Dep" on ("Dep"."CityID" = "Departure")
+join (select * from "Cities")"Arr" on ("Arr"."CityID" = "Arrival")
+where "Arr"."CityName" = 'Moscow';
+
+//как будто то же самое, что и в предыдущем пункте
+select "FlightID" from "FlightsTable"
+join "Planes" on ("Planes"."PlaneID" = "FlightsTable"."PlaneID")
+join "PlaneModels" on ("PlaneModels"."ModelID" = "Planes"."PlaneModel")
+where "PlaneModels"."Name" = 'Boeing 737-800';
