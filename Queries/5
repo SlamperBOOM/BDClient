@@ -1,0 +1,23 @@
+Получить перечень и общее число самолетов, пpошедших техосмотp за определенный пеpиод вpемени, отпpавленных в pемонт в указанное вpемя, pемонтиpованных заданное
+число pаз, по количеству совеpшенных pейсов до pемонта, по возpасту самолета.
+
+select distinct "Planes"."PlaneID" from "Planes"
+join "PlanesService" on ("PlanesService"."PlaneID" = "Planes"."PlaneID")
+where "DateOfService" < '05.25.2015' and "DateOfService" > '05.25.2010';
+
+select distinct "Planes"."PlaneID" from "Planes"
+join "PlanesService" on ("PlanesService"."PlaneID" = "Planes"."PlaneID")
+where "DateOfService" = '05.31.2017';
+
+select "Planes"."PlaneID", count("ID") from "Planes"
+left join "PlanesService" on ("PlanesService"."PlaneID" = "Planes"."PlaneID")
+group by "Planes"."PlaneID"
+having count("ID") = 4
+order by "Planes"."PlaneID" asc;
+
+select "Planes"."PlaneID", "DateOfService", count("FlightID") from "Planes"
+join "PlanesService" on ("PlanesService"."PlaneID" = "Planes"."PlaneID")
+join "FlightsTable" on ("Planes"."PlaneID" = "FlightsTable"."PlaneID")
+where "ArrivalDate" < "DateOfService"
+group by "Planes"."PlaneID", "DateOfService"
+order by "Planes"."PlaneID" asc;
