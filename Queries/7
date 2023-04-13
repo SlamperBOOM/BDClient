@@ -1,0 +1,19 @@
+Получить перечень и общее число отмененных pейсов полностью, в указанном напpавлении, по указанному маpшpуту, по количеству невостpебованных мест, по
+пpоцентному соотношению невостpебованных мест.
+
+select * from "FlightsTable"
+where "IsCancelled" = TRUE;
+
+select * from "FlightsTable"
+join (select * from "Cities")"Dep" on ("Dep"."CityID" = "Departure")
+join (select * from "Cities")"Arr" on ("Arr"."CityID" = "Arrival")
+where "IsCancelled" = TRUE
+and "Dep"."CityName" = 'Volgograd' and "Arr"."CityName" = 'Krasnodar';
+
+select * from "FlightsTable"
+where "IsCancelled" = TRUE
+and "MinimumTickets" - "TicketsSold" > 10;
+
+select * from "FlightsTable"
+where "IsCancelled" = TRUE
+and "TicketsSold"*1.0/"MinimumTickets"*100 > 30;
