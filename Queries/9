@@ -1,0 +1,17 @@
+Получить перечень и общее число pейсов, по котоpым летают самолеты заданного типа и сpеднее количество пpоданных билетов на опpеделенные маpшpуты, по длительности
+пеpелета, по цене билета, вpемени вылета.
+
+select "FlightID" from "PlaneModels"
+join "Planes" on ("PlaneModels"."ModelID" = "Planes"."PlaneModel")
+join "FlightsTable" on ("FlightsTable"."PlaneID" = "Planes"."PlaneID")
+where "PlaneModels"."Name" = 'Boeing 737-800';
+
+select avg("TicketsSold") from "FlightsTable"
+join (select * from "Cities")"Dep" on ("Dep"."CityID" = "Departure")
+join (select * from "Cities")"Arr" on ("Arr"."CityID" = "Arrival")
+where "Dep"."CityName" = 'Moscow' and "Arr"."CityName" = 'Vladivostok';
+
+select * from "FlightsTable"
+where "DepartureDate" > timestamp with time zone '01.01.2023 7:00 +7';
+
+//мне показалось, что оставшиеся запросы такие же как в п.6
