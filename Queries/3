@@ -1,0 +1,60 @@
+Получить перечень и общее число пилотов, пpошедших медосмотp либо не пpошедших его в указанный год, по половому пpизнаку, возpасту, pазмеpу заpаботной платы.
+
+select distinct "Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids", "PilotsMedicalControl"."DateOfControl"
+from "Pilots"
+join "Employees" on ("Pilots"."EmployeeID" = "Employees"."EmployeeID")
+join "PilotsMedicalControl" on ("Pilots"."PilotID" = "PilotsMedicalControl"."PilotID")
+where date_part('year', "PilotsMedicalControl"."DateOfControl") = 2011
+order by "EmployeeID" ASC;
+
+//кто не проходил медосмотр в указанный год
+select "Pilots"."PilotID", "Employees"."EmployeeID", "Employees"."Name",
+"Employees"."BrigadeID", "Employees"."Sex", "Employees"."Hired", "Employees"."Salary", 
+"Employees"."Age", "Employees"."Kids" 
+from "Pilots"
+join "Employees" on ("Pilots"."EmployeeID" = "Employees"."EmployeeID")
+where "Pilots"."PilotID" not in
+(
+select distinct "Pilots"."PilotID" 
+from "Pilots"
+join "PilotsMedicalControl" on ("Pilots"."PilotID" = "PilotsMedicalControl"."PilotID")
+where date_part('year', "PilotsMedicalControl"."DateOfControl") = 2011
+)
+order by "PilotID" ASC;
+
+select "Pilots"."PilotID", "Employees"."EmployeeID", "Employees"."Name",
+"Employees"."BrigadeID", "Employees"."Sex", "Employees"."Hired", "Employees"."Salary", 
+"Employees"."Age", "Employees"."Kids" 
+from "Pilots"
+join "Employees" on ("Pilots"."EmployeeID" = "Employees"."EmployeeID")
+where "Sex" = 'M'
+order by "PilotID" ASC;
+
+select "Pilots"."PilotID", "Employees"."EmployeeID", "Employees"."Name",
+"Employees"."BrigadeID", "Employees"."Sex", "Employees"."Hired", "Employees"."Salary", 
+"Employees"."Age", "Employees"."Kids" 
+from "Pilots"
+join "Employees" on ("Pilots"."EmployeeID" = "Employees"."EmployeeID")
+where "Age" <= 40
+order by "PilotID" ASC;
+
+select "Pilots"."PilotID", "Employees"."EmployeeID", "Employees"."Name",
+"Employees"."BrigadeID", "Employees"."Sex", "Employees"."Hired", "Employees"."Salary", 
+"Employees"."Age", "Employees"."Kids" 
+from "Pilots"
+join "Employees" on ("Pilots"."EmployeeID" = "Employees"."EmployeeID")
+where "Salary" > 40000
+order by "PilotID" ASC;
+
+select COUNT("PilotID")
+from "Pilots"
+join "Employees" on ("Pilots"."EmployeeID" = "Employees"."EmployeeID")
+where "Pilots"."PilotID" not in
+(
+select distinct "Pilots"."PilotID" 
+from "Pilots"
+join "PilotsMedicalControl" on ("Pilots"."PilotID" = "PilotsMedicalControl"."PilotID")
+where date_part('year', "PilotsMedicalControl"."DateOfControl") = 2011
+);
