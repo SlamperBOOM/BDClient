@@ -1,0 +1,64 @@
+Получить перечень и общее число pаботников в бpигаде, по всем отделам, в указанном отделе, обслуживающих конкретный pейс, по возpасту, суммаpной (сpедней) заpплате в
+бpигаде. (не совсем понял как получить перечень/число работников по суммарной зп)
+
+Select 
+"Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids"
+from "Employees"
+join "Brigades" on ("Employees"."BrigadeID"="Brigades"."BrigadeID")
+where "Brigades"."Name" = 'Pilots First Main Brig';
+
+Select 
+"Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids"
+from "Employees"
+join "Brigades" on ("Employees"."BrigadeID"="Brigades"."BrigadeID")
+join "Departments" on ("Departments"."DepID" = "Brigades"."BrigadeID");
+
+Select 
+"Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids"
+from "Employees"
+join "Brigades" on ("Employees"."BrigadeID"="Brigades"."BrigadeID")
+join "Departments" on ("Departments"."DepID" = "Brigades"."DepID")
+where "Departments"."DepartmentName" = 'Cashiers Dep';
+
+Select 
+"Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids"
+from "Employees"
+join "Brigades" on ("Employees"."BrigadeID"="Brigades"."BrigadeID")
+join "Planes" on ("Planes"."PilotBrigade"="Brigades"."BrigadeID" OR
+				 "Planes"."TechnicsBrigade"="Brigades"."BrigadeID" or
+				 "Planes"."PlaneStaffBrigade"="Brigades"."BrigadeID")
+join "FlightsTable" on ("FlightsTable"."PlaneID" = "Planes"."PlaneID")
+where "FlightID" = 7;
+
+Select 
+"Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids"
+from "Employees"
+join "Brigades" on ("Employees"."BrigadeID"="Brigades"."BrigadeID")
+join "Planes" on ("Planes"."PilotBrigade"="Brigades"."BrigadeID" OR
+				 "Planes"."TechnicsBrigade"="Brigades"."BrigadeID" or
+				 "Planes"."PlaneStaffBrigade"="Brigades"."BrigadeID")
+join "FlightsTable" on ("FlightsTable"."PlaneID" = "Planes"."PlaneID")
+where "FlightID" = 7 and "Employees"."Age" > 41;
+
+Select 
+"Employees"."EmployeeID", "Employees"."Name", "Employees"."BrigadeID", 
+"Employees"."Sex", "Employees"."Hired", "Employees"."Salary", "Employees"."Age",
+"Employees"."Kids",
+"Sub"."avg"
+from "Employees"
+join "Brigades" on ("Employees"."BrigadeID"="Brigades"."BrigadeID")
+join "Planes" on ("Planes"."PilotBrigade"="Brigades"."BrigadeID" OR
+				 "Planes"."TechnicsBrigade"="Brigades"."BrigadeID" or
+				 "Planes"."PlaneStaffBrigade"="Brigades"."BrigadeID")
+join "FlightsTable" on ("FlightsTable"."PlaneID" = "Planes"."PlaneID")
+join (select avg("Salary") as "avg" from "Employees")"Sub" on ("Employees"."Salary" < "Sub"."avg");
