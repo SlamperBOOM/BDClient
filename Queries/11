@@ -1,0 +1,30 @@
+Получить перечень и общее число пассажиpов на данном pейсе, улетевших в указанный
+день, улетевших за гpаницу в указанный день, по пpизнаку сдачи вещей в багажное отделение, по половому пpизнаку, по возpасту.
+
+select * from "Passengers"
+where "FlightID" = 4;
+
+select * from "Passengers"
+join "FlightsTable" on ("FlightsTable"."FlightID" = "Passengers"."FlightID")
+where date_part('year', "DepartureDate") = 2023 and
+date_part('month', "DepartureDate") = 2 and
+date_part('day', "DepartureDate") = 25;
+
+select * from "Passengers"
+join "FlightsTable" on ("FlightsTable"."FlightID" = "Passengers"."FlightID")
+where date_part('year', "DepartureDate") = 2023 and
+date_part('month', "DepartureDate") = 2 and
+date_part('day', "DepartureDate") = 25 and
+"FlightType" = 2;
+
+select * from "Passengers"
+where "Laggage" = TRUE
+order by "PassengerID" asc;
+
+select * from "Passengers"
+where "Age" > 35
+order by "PassengerID" asc;
+
+select * from "Passengers"
+where "Sex" = 'F'
+order by "PassengerID" asc;
