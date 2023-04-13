@@ -1,0 +1,34 @@
+Получить общее число сданных билетов на некоторый pейс, в указанный день, по
+определенному маpшpуту, по цене билета, по возpасту, полу.
+
+select count("PassengerID") from "Passengers"
+join "FlightsTable" on ("Passengers"."FlightID" = "FlightsTable"."FlightID")
+where "RefundDate" is not null and
+"Passengers"."FlightID" = 4;
+
+select count("PassengerID") from "Passengers"
+join "FlightsTable" on ("Passengers"."FlightID" = "FlightsTable"."FlightID")
+where "RefundDate" is not null and
+date_part('year', "DepartureDate") = 2023 and
+date_part('month', "DepartureDate") = 2 and
+date_part('day', "DepartureDate") = 25;
+
+select count("PassengerID") from "Passengers"
+join "FlightsTable" on ("Passengers"."FlightID" = "FlightsTable"."FlightID")
+where "RefundDate" is not null and
+"Departure" = 1 and "Arrival" = 4;
+
+select count("PassengerID") from "Passengers"
+join "FlightsTable" on ("Passengers"."FlightID" = "FlightsTable"."FlightID")
+where "RefundDate" is not null and
+"Cost" > 20000;
+
+select count("PassengerID") from "Passengers"
+join "FlightsTable" on ("Passengers"."FlightID" = "FlightsTable"."FlightID")
+where "RefundDate" is not null and
+"Sex" = 'F';
+
+select count("PassengerID") from "Passengers"
+join "FlightsTable" on ("Passengers"."FlightID" = "FlightsTable"."FlightID")
+where "RefundDate" is not null and
+"Age" > 30;
