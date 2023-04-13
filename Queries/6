@@ -1,0 +1,18 @@
+Получить перечень и общее число pейсов по указанному маpшpуту, по длительности пеpелета, по цене билета и по всем этим кpитеpиям сpазу.
+
+select * from "FlightsTable"
+join (select * from "Cities")"Dep" on ("Dep"."CityID" = "Departure")
+join (select * from "Cities")"Arr" on ("Arr"."CityID" = "Arrival")
+where "Dep"."CityName" = 'Moscow' and "Arr"."CityName" = 'Novosibirsk';
+
+select * from "FlightsTable"
+where "TimeOfFlight" > '2:00';
+
+select * from "FlightsTable"
+where "Cost" > 30000;
+
+select * from "FlightsTable"
+join (select * from "Cities")"Dep" on ("Dep"."CityID" = "Departure")
+join (select * from "Cities")"Arr" on ("Arr"."CityID" = "Arrival")
+where "Cost" > 30000 and "TimeOfFlight" > '4:00' 
+and "Dep"."CityName" = 'Moscow' and "Arr"."CityName" = 'Vladivostok';
